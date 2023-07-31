@@ -1,5 +1,5 @@
 // import 'dart:html' as html;
-import 'dart:ffi';
+// import 'dart:ffi
 import 'dart:io';
 
 void main() {
@@ -77,8 +77,48 @@ void main() {
             break;
           } else {
             print("Hatalı giriş yaptınız!");
+            throw ArgumentError(ArgumentError.value(istek).message);
           }
         } while (true);
+        break;
+
+      case 'a':
+      case 'A':
+        ConsolClear();
+        do {
+          //Kişi Arama
+          print("Aramak istediğiniz Kişiyi yazınız: ");
+          late String isim = stdin.readLineSync()!;
+          int sirasi = (adSoyad.indexOf(isim));
+          if (sirasi >= 0) {
+            print("Aranan kişi bulundu.\n" +
+                "${sirasi + 1} - ${adSoyad[sirasi]} ");
+          } else if (sirasi < 0) {
+            print("Aradığınız isim bulunamadı.");
+          }
+          print("Başka bir arama yapmak ister misiniz? (e/h)");
+          String temp = stdin.readLineSync()!;
+          if (temp == 'e') {
+            break;
+          } else {
+            continue;
+          }
+        } while (true);
+        break;
+
+      case 't':
+      case 'T': //Silinen Kişileri Listeleme
+        ConsolClear();
+        print("Silinen Kişiler\n----------------------------------\n");
+        SilinenKisiler.forEach((kisi) {
+          print(kisi);
+        });
+
+        break;
+
+      default:
+        print("Hatalı giriş yaptınız tekrar giriniz!");
+        break;
     }
   } while (durum);
 }
