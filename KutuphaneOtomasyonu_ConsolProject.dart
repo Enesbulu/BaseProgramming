@@ -1,9 +1,10 @@
-import 'dart:html';
+// import 'dart:html' as html;
+import 'dart:ffi';
 import 'dart:io';
 
 void main() {
   print("Rehber uygulamasına hoş gelidniz.");
-  List<String> asdSoyad = [];
+  List<String> adSoyad = [];
   List<String> SilinenKisiler = [];
   bool durum = true;
 
@@ -11,7 +12,7 @@ void main() {
     print(
         "\n\nE- Kişi Ekle\nL- Kişileri Listele\nS- Kişi Sil\nA- Kişi Ara\nT- Silinen Kişiler\nX- Programdan Çık");
     stdout.write("Yapmak İstediğiniz İşlemi Seçiniz: ");
-    String islem;
+    String? islem;
     try {
       islem = stdin.readLineSync()!;
       if (islem.length > 0) {
@@ -19,7 +20,72 @@ void main() {
         continue;
       }
     } catch (e) {
-      print(e.toString());
+      print("Hata!!>>" + e.toString());
+    }
+
+    switch (islem) {
+      case 'e': //Kişi Ekleme
+      case 'E':
+        ConsolClear(); //consol temizleme
+        print("--Bir üst menüye dönmek için (x) e basınız--");
+        for (;;) {
+          print("İsim-Soyisim giriniz:");
+          String temp = stdin.readLineSync()!;
+          if (temp == 'x' || temp == 'X')
+            break; //üst menüye dönmek için break kullanılır.
+          adSoyad.add(temp);
+        }
+        adSoyad.sort();
+        break;
+      case 'l': //Kişi Kisteleme
+      case 'L':
+        ConsolClear();
+        adSoyad.forEach((person) {
+          print(person);
+        });
+        break;
+
+      case 's':
+      case 'S':
+        ConsolClear();
+        do {
+          //Kişi silme
+          for (int i = 0; i <= adSoyad.length; i++) {
+            print("#(i+1) - $adSoyad[i]");
+          }
+          late int sira;
+          stdout.write("Silmek istediğiniz kişinin numarasını giriniz:  ");
+          do {
+            //dönüşün için hata kontrolü yapıldı.
+            try {
+              sira = int.parse(stdin.readLineSync()!);
+            } catch (e) {
+              print("Hatalı giriş yaptını tekrar giriniz!");
+              continue;
+            }
+            break;
+          } while (true);
+
+          SilinenKisiler.add(adSoyad[sira - 1]);
+          adSoyad.remove(sira - 1);
+          print("Kayıt Başarı ile silinmiştir.");
+          stdout.write("Başka kayıt silmek istiyor musunuz?(e/h)");
+          String istek = stdin.readLineSync()!;
+          if (istek == 'e' || istek == 'E') {
+            continue;
+          } else if (istek == 'h' || istek == 'H') {
+            break;
+          } else {
+            print("Hatalı giriş yaptınız!");
+          }
+        } while (true);
     }
   } while (durum);
+}
+
+//consol temizleme için metod
+void ConsolClear() {
+  if (Platform.isWindows) {
+    Process.runSync("cls", [], runInShell: true);
+  }
 }
