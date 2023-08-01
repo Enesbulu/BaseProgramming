@@ -1,7 +1,7 @@
 import 'DersNotlari.dart';
 import 'dart:io';
 
-void main() {
+main() {
   var dersNotListesi = <DersNotlari>[];
   int toplam = 0;
   while (true) {
@@ -39,4 +39,5 @@ void main() {
   } else {
     print("Kaldınız!");
   }
+  return ort;
 }
