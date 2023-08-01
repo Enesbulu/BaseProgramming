@@ -2,6 +2,7 @@ import 'dart:io';
 import 'Ogrenciler.dart';
 import 'KarneUygulamasi.dart' as karneapp;
 
+//Uygulamanın çalıştığı asıl dart dosyasıdır
 void main() {
   int num = 1;
   var ogrenciler = <Ogrenci>[];
